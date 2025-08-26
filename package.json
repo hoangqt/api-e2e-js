@@ -1,0 +1,25 @@
+{
+  "name": "api-e2e-js",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "jest",
+    "lint": "eslint src tests",
+    "allure": "npx allure-commandline serve allure-results"
+  },
+  "author": "Hoang Tran",
+  "license": "MIT",
+  "description": "A simple project testing a subset of the GitHub API using REST requests.",
+  "dependencies": {
+    "axios": "^1.11.0",
+    "dotenv": "^17.2.1"
+  },
+  "devDependencies": {
+    "allure-commandline": "^2.34.1",
+    "allure-jest": "^3.3.3",
+    "eslint": "^9.34.0",
+    "jest": "^30.0.5",
+    "jest-environment-node": "^30.0.5"
+  }
+}
