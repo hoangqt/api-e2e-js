@@ -1,3 +1,7 @@
+![Solo walk at the farm](evening.png)
+
+*To have ideas one must have imagination. -- The Art Spirit*
+
 ## Summary
 
 A simple npm project for testing a subset of the GitHub API using REST
