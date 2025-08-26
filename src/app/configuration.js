@@ -1,7 +1,7 @@
-const dotenv = require('dotenv');
-const path = require('path');
+const dotenv = require("dotenv");
+const path = require("path");
 
-dotenv.config({ path: path.resolve(__dirname, '../../tests/resources/.env') });
+dotenv.config({ path: path.resolve(__dirname, "../../tests/resources/.env") });
 
 class Configuration {
   constructor() {

@@ -28,6 +28,10 @@ jobs:
         run: |
           npm install
 
+      - name: Run code formattingo
+        run: |
+          npx prettier --check src tests
+
       - name: Run linting
         run: |
           npm run lint
