@@ -2,6 +2,7 @@ const Configuration = require("../src/app/configuration.js");
 const { base_url, repo } = require("../src/app/github.js");
 
 const axios = require("axios");
+const axiosRetry = require("axios-retry");
 
 describe("GitHub API Tests", () => {
   let headers;
@@ -107,6 +108,17 @@ describe("GitHub API Tests", () => {
       assignees: [`${owner}`],
       labels: ["bug", "invalid"],
     };
+
+    axiosRetry(axios, {
+      retries: 5,
+      retryDelay: (retryCount, error) => {
+        const delay = Math.pow(2, retryCount) * 1000; // 1s, 2s, 4s, 8s...
+        const jitter = Math.random() * 1000; // Add 0-1s jitter
+
+        return delay + jitter;
+      }
+    });
+
     const response = await axios.patch(
       `${base_url}/repos/${owner}/${repo}/issues/${issueNumber}`,
       body,
