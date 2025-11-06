@@ -116,7 +116,7 @@ describe("GitHub API Tests", () => {
         const jitter = Math.random() * 1000; // Add 0-1s jitter
 
         return delay + jitter;
-      }
+      },
     });
 
     const response = await axios.patch(
