@@ -1,8 +1,8 @@
-const Configuration = require("../src/app/configuration.js");
-const { base_url, repo } = require("../src/app/github.js");
+import Configuration from "../src/app/configuration.js";
+import { base_url, repo } from "../src/app/github.js";
 
-const axios = require("axios");
-const axiosRetry = require("axios-retry");
+import axios from "axios";
+import axiosRetry from "axios-retry";
 
 describe("GitHub API Tests", () => {
   let headers;
