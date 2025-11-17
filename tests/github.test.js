@@ -33,9 +33,11 @@ describe("GitHub API Tests", () => {
   });
 
   it("should create a new issue", async () => {
+    const bodyText = "This is a test issue created by automation";
+
     const body = {
       title: "Found a bug",
-      body: "This is a test issue created by automation",
+      body: bodyText,
       assignees: [`${owner}`],
       labels: ["bug"],
     };
@@ -46,10 +48,7 @@ describe("GitHub API Tests", () => {
     );
     expect(response.status).toBe(201);
     expect(response.data).toHaveProperty("title", "Found a bug");
-    expect(response.data).toHaveProperty(
-      "body",
-      "This is a test issue created by automation",
-    );
+    expect(response.data).toHaveProperty("body", bodyText);
     expect(response.data).toHaveProperty("state", "open");
   });
 
