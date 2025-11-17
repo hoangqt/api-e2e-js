@@ -48,10 +48,7 @@ describe("GitHub API Tests", () => {
     );
     expect(response.status).toBe(201);
     expect(response.data).toHaveProperty("title", "Found a bug");
-    expect(response.data).toHaveProperty(
-      "body",
-      bodyText,
-    );
+    expect(response.data).toHaveProperty("body", bodyText);
     expect(response.data).toHaveProperty("state", "open");
   });
 
