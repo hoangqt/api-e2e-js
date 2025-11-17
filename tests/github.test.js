@@ -48,7 +48,7 @@ describe("GitHub API Tests", () => {
     expect(response.data).toHaveProperty("title", "Found a bug");
     expect(response.data).toHaveProperty(
       "body",
-      "This is a test issue created by automation",
+      "This is a test issue created by javascript automation",
     );
     expect(response.data).toHaveProperty("state", "open");
   });
