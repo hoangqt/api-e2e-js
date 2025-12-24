@@ -1,5 +1,6 @@
 import Configuration from "../src/app/configuration.js";
 import { base_url, repo } from "../src/app/github.js";
+import { logger } from "../src/app/logger.js";
 
 import axios from "axios";
 import axiosRetry from "axios-retry";
@@ -23,7 +24,9 @@ describe("GitHub API Tests", () => {
   });
 
   it("should fetch user repositories", async () => {
-    const response = await axios.get(`${base_url}/repos/${owner}/${repo}`, {
+    const url = `${base_url}/repos/${owner}/${repo}`;
+    logger.debug(`Fetching repository from ${url}`);
+    const response = await axios.get(url, {
       headers,
     });
 
@@ -41,11 +44,9 @@ describe("GitHub API Tests", () => {
       assignees: [`${owner}`],
       labels: ["bug"],
     };
-    const response = await axios.post(
-      `${base_url}/repos/${owner}/${repo}/issues`,
-      body,
-      { headers },
-    );
+    const url = `${base_url}/repos/${owner}/${repo}/issues`;
+    logger.debug(`Creating issue at ${url}`);
+    const response = await axios.post(url, body, { headers });
     expect(response.status).toBe(201);
     expect(response.data).toHaveProperty("title", "Found a bug");
     expect(response.data).toHaveProperty("body", bodyText);
@@ -53,10 +54,9 @@ describe("GitHub API Tests", () => {
   });
 
   it("should get issue number from new issue", async () => {
-    const response = await axios.get(
-      `${base_url}/repos/${owner}/${repo}/issues`,
-      { headers },
-    );
+    const url = `${base_url}/repos/${owner}/${repo}/issues`;
+    logger.debug(`Fetching issues from ${url}`);
+    const response = await axios.get(url, { headers });
     expect(response.status).toBe(200);
 
     const issueList = response.data;
@@ -64,8 +64,8 @@ describe("GitHub API Tests", () => {
       for (const issue of issueList) {
         if (issue.title === "Found a bug") {
           expect(issue).toHaveProperty("number");
-          console.log(`Issue number: ${issue.number}`);
           issueNumber = issue.number;
+          logger.debug(`Issue number: ${issueNumber}`);
           return;
         }
       }
@@ -77,10 +77,9 @@ describe("GitHub API Tests", () => {
 
     let found = false;
     while (Date.now() < deadline) {
-      const response = await axios.get(
-        `${base_url}/repos/${owner}/${repo}/issues`,
-        { headers },
-      );
+      const pollUrl = `${base_url}/repos/${owner}/${repo}/issues`;
+      logger.debug(`Polling issues from ${pollUrl}`);
+      const response = await axios.get(pollUrl, { headers });
       expect(response.status).toBe(200);
       const issueList = response.data;
 
@@ -88,8 +87,8 @@ describe("GitHub API Tests", () => {
         for (const issue of issueList) {
           if (issue.title === "Found a bug") {
             expect(issue).toHaveProperty("number");
-            console.log(`Issue number: ${issue.number}`);
             issueNumber = issue.number;
+            logger.debug(`Issue number: ${issueNumber}`);
             found = true;
             break;
           }
@@ -118,11 +117,9 @@ describe("GitHub API Tests", () => {
       },
     });
 
-    const response = await axios.patch(
-      `${base_url}/repos/${owner}/${repo}/issues/${issueNumber}`,
-      body,
-      { headers },
-    );
+    const url = `${base_url}/repos/${owner}/${repo}/issues/${issueNumber}`;
+    logger.debug(`Updating issue at ${url}`);
+    const response = await axios.patch(url, body, { headers });
     expect(response.status).toBe(200);
     expect(response.data.labels.map((label) => label.name)).toEqual([
       "bug",
@@ -131,10 +128,9 @@ describe("GitHub API Tests", () => {
   });
 
   it("should get a list of repo commits", async () => {
-    const response = await axios.get(
-      `${base_url}/repos/${owner}/${repo}/commits`,
-      { headers },
-    );
+    const url = `${base_url}/repos/${owner}/${repo}/commits`;
+    logger.debug(`Fetching commits from ${url}`);
+    const response = await axios.get(url, { headers });
     expect(response.status).toBe(200);
     expect(response.data[0]).toHaveProperty("committer.login", `${owner}`);
   });
