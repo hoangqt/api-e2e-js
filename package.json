@@ -10,7 +10,7 @@
   },
   "author": "Hoang Tran",
   "license": "MIT",
-  "description": "A simple project testing a subset of the GitHub API using REST requests.",
+  "description": "A simple project testing a subset of the GitHub API using REST requests :)",
   "dependencies": {
     "axios": "^1.11.0",
     "dotenv": "^17.2.1"
